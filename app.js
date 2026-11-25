@@ -83,11 +83,13 @@
 
   // ---------- render ----------
   function overlayCanvas(W, H) {
-    const key = `${W}x${H}:${baseImg.src.length}`;
+    const key = `${W}x${H}:${baseImg.naturalWidth}x${baseImg.naturalHeight}`;
     if (overlayCache.key === key) return overlayCache.canvas;
     const o = document.createElement("canvas");
     o.width = W; o.height = H;
     const c = o.getContext("2d");
+    c.imageSmoothingEnabled = true;
+    c.imageSmoothingQuality = "high";
     c.drawImage(baseImg, 0, 0, W, H);
     c.globalCompositeOperation = "destination-in";
     c.drawImage(maskImg, 0, 0, W, H);
@@ -211,6 +213,8 @@
 
   function render(c, W, H, preview) {
     c.clearRect(0, 0, W, H);
+    c.imageSmoothingEnabled = true;
+    c.imageSmoothingQuality = "high";
     c.drawImage(baseImg, 0, 0, W, H);
 
     for (const s of slots) {
@@ -522,8 +526,8 @@
   });
 
   // ---------- init ----------
-  cv.width = 2048;
-  cv.height = Math.round(2048 * RATIO);
+  cv.width = A.ratioW;
+  cv.height = A.ratioH;
   Promise.all([loadImg(A.base), loadImg(A.mask), loadImg(A.logo)]).then(([b, m, l]) => {
     baseImg = b;
     maskImg = m;

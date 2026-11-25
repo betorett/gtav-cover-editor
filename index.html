@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="color-scheme" content="light dark">
   <title>Editor de carátula GTA V (PS4)</title>
-  <link rel="stylesheet" href="styles.css">
-  <script src="assets.js" defer></script>
-  <script src="app.js" defer></script>
+  <link rel="stylesheet" href="styles.css?v=3225">
+  <script src="assets.js?v=3225" defer></script>
+  <script src="app.js?v=3225" defer></script>
 </head>
 <body>
   <header class="topbar">
@@ -21,7 +21,7 @@
       <label class="sr-only" for="exportWidth">Resolución</label>
       <select id="exportWidth" class="btn">
         <option value="2048">2048 px</option>
-        <option value="3072" selected>3072 px</option>
+        <option value="3225" selected>3225 px (Original)</option>
         <option value="4096">4096 px</option>
       </select>
       <button type="button" id="downloadBtn" class="btn btn-primary">Descargar PNG</button>
@@ -35,7 +35,7 @@
         <button type="button" id="cancelSwapBtn" class="btn btn-sm">Cancelar</button>
       </div>
       <div class="frame">
-        <canvas id="cv" width="2048" height="1206" tabindex="0"
+        <canvas id="cv" width="3225" height="1900" tabindex="0"
           aria-label="Carátula. Haz clic en una foto para cambiarla, arrastra para encuadrar y usa la rueda para hacer zoom."></canvas>
       </div>
       <p class="hint">Clic en una foto para cambiarla · arrastra para encuadrar · rueda para zoom · doble clic para sustituir · suelta fotos encima</p>
