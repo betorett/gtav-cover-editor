@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <title>Editor de carátula GTA V (PS4)</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="assets.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="title">
+      <h1>Carátula GTA V · PS4</h1>
+      <p>Cambia las fotos de la portada y la contraportada. El resto es la carátula original.</p>
+    </div>
+    <div class="actions">
+      <button type="button" id="multiBtn" class="btn">Subir varias fotos</button>
+      <button type="button" id="resetBtn" class="btn btn-danger">Quitar todas</button>
+      <label class="sr-only" for="exportWidth">Resolución</label>
+      <select id="exportWidth" class="btn">
+        <option value="2048">2048 px</option>
+        <option value="3072" selected>3072 px</option>
+        <option value="4096">4096 px</option>
+      </select>
+      <button type="button" id="downloadBtn" class="btn btn-primary">Descargar PNG</button>
+    </div>
+  </header>
+
+  <main class="workspace">
+    <section class="stage">
+      <div id="swapBanner" class="swap-banner" hidden>
+        <span>Modo intercambio: haz clic en otra foto para intercambiarlas</span>
+        <button type="button" id="cancelSwapBtn" class="btn btn-sm">Cancelar</button>
+      </div>
+      <div class="frame">
+        <canvas id="cv" width="2048" height="1206" tabindex="0"
+          aria-label="Carátula. Haz clic en una foto para cambiarla, arrastra para encuadrar y usa la rueda para hacer zoom."></canvas>
+      </div>
+      <p class="hint">Clic en una foto para cambiarla · arrastra para encuadrar · rueda para zoom · doble clic para sustituir · suelta fotos encima</p>
+    </section>
+
+    <aside class="panel" aria-label="Fotos y ajustes">
+      <h2>Fotos</h2>
+      <div id="slotList" class="slots"></div>
+
+      <h2 id="selTitle">Foto seleccionada</h2>
+      <div class="row">
+        <button type="button" id="uploadBtn" class="btn btn-primary">Elegir foto</button>
+        <button type="button" id="removeBtn" class="btn btn-danger">Quitar</button>
+      </div>
+      <div class="field">
+        <label for="zoom">Zoom <output id="zoomOut">1.00×</output></label>
+        <input type="range" id="zoom" min="0.5" max="4" step="0.01" value="1">
+      </div>
+      <div class="field">
+        <label for="rot">Rotación <output id="rotOut">0°</output></label>
+        <input type="range" id="rot" min="-30" max="30" step="1" value="0">
+      </div>
+      <div class="row-3">
+        <button type="button" id="flipBtn" class="btn">Voltear</button>
+        <button type="button" id="centerBtn" class="btn">Centrar</button>
+        <button type="button" id="swapBtn" class="btn">Intercambiar</button>
+      </div>
+      <label class="check" for="showOutlines">
+        <input type="checkbox" id="showOutlines" class="brand-checkbox" checked>
+        <span>Mostrar huecos editables (solo vista previa)</span>
+      </label>
+
+      <h2>Texto contraportada (mitad superior)</h2>
+      <div class="text-field">
+        <label for="backHeader">Cabecera superior</label>
+        <input type="text" id="backHeader" value="ROCKSTAR GAMES PRESENTS A ROCKSTAR NORTH PRODUCTION">
+      </div>
+      <div class="text-field">
+        <label for="backSynopsis">Sinopsis (junto a foto superior)</label>
+        <textarea id="backSynopsis" rows="5">When a young street hustler, a retired bank robber and a terrifying psychopath find themselves entangled with some of the most frightening and deranged elements of the criminal underworld, the U.S. government and the entertainment industry, they must pull off a series of dangerous heists to survive in a ruthless city in which they can trust nobody, least of all each other.</textarea>
+      </div>
+      <div class="text-field">
+        <label for="backFeatures">Texto bajo las 3 capturas</label>
+        <textarea id="backFeatures" rows="4">Features across-the-board graphical and technical enhancements for a deeper, more vibrant world.
+Transfer your existing Grand Theft Auto Online characters and progression to PlayStation®4.*
+Returning players get exclusive vehicles, weapons, collectibles and more.**
+Includes all Grand Theft Auto Online and Grand Theft Auto V free-to-access content updates.</textarea>
+      </div>
+      <button type="button" id="resetTextsBtn" class="btn btn-sm">Restaurar textos originales</button>
+    </aside>
+  </main>
+
+  <dialog id="resetDialog" closedby="any" aria-labelledby="resetTitle">
+    <div class="dlg-head">
+      <h2 id="resetTitle">¿Quitar todas las fotos?</h2>
+      <button type="button" class="btn btn-sm" id="closeResetBtn" aria-label="Cerrar">✕</button>
+    </div>
+    <p class="dlg-body">Se quitarán todas las fotos que hayas subido y volverá a verse la carátula original intacta.</p>
+    <div class="dlg-foot">
+      <button type="button" class="btn" id="cancelResetBtn">Cancelar</button>
+      <button type="button" class="btn btn-danger" id="confirmResetBtn">Sí, quitar todas</button>
+    </div>
+  </dialog>
+
+  <input type="file" id="fileOne" accept="image/*" hidden>
+  <input type="file" id="fileMany" accept="image/*" multiple hidden>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>
